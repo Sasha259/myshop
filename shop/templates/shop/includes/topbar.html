@@ -1,0 +1,40 @@
+<div class="service-bar">
+    <div class="service-left">
+        <a href="tel:+99999999999">+999 (99) 999-99-99</a>
+        <a href="tel:+99999999998">+999 (99) 999-99-98</a>
+    </div>
+</div>
+
+<div class="main-header">
+
+    <!-- LEFT -->
+    <div class="header-left">
+        <a href="{% url 'shop:product_list' %}" class="logo">
+            MyShop
+        </a>
+
+        <a href="{% url 'shop:catalog' %}" class="catalog-btn">
+            Каталог
+        </a>
+    </div>
+
+    <!-- SEARCH -->
+    <form class="header-search"
+          method="get"
+          action="{% if category %}
+                    {% url 'shop:product_list_by_category' category.slug %}
+                  {% else %}
+                    {% url 'shop:catalog' %}
+                  {% endif %}">
+
+        <input type="text"
+               name="q"
+               value="{{ request.GET.q }}"
+               placeholder="Поиск товаров...">
+
+        <button type="submit">
+            🔍
+        </button>
+    </form>
+
+</div>

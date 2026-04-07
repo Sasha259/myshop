@@ -1,0 +1,28 @@
+:root {
+  /* ФОН */
+  --bg-main: #F5F7F8;
+  --bg-card: #FFFFFF;
+  --bg-soft: #EEF2F4;
+
+  /* ТЕКСТ */
+  --text-main: #3D3D3F;
+  --text-muted: #6A737F;
+
+  /* АКЦЕНТЫ */
+  --blue: #2066B0;
+  --blue-light: #3B82F6;
+  --blue-dark: #174A86;
+  --blue-gradient-start: #1E88E5;
+  --blue-gradient-end: #1565C0;
+
+  --orange: #FFA900;
+  --green: #29AD49;
+  --red: #F0371B;
+
+  /* UI */
+  --radius: 10px;
+  --border: #E0E4E8;
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-blue: 0 6px 16px rgba(32,102,176,0.35);
+  --shadow-soft: 0 2px 8px rgba(0,0,0,0.06);
+}

@@ -1,0 +1,59 @@
+/* ОСНОВНАЯ СЕТКА */
+.site-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 120px);
+  background: var(--bg-main);
+}
+
+/* ЛЕВАЯ КОЛОНКА */
+.site-sidenav {
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+}
+
+/* КОНТЕНТ */
+.site-content {
+  padding: 24px 36px;
+  background: var(--bg-main);
+}
+
+.site-footer {
+  width: 100%;
+  margin-top: 60px;
+
+  background: linear-gradient(
+    180deg,
+    #1e3a5f,
+    #14263d
+  );
+
+  color: #ffffff;
+}
+
+.footer-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.site-footer h4 {
+  margin-bottom: 12px;
+  font-size: 16px;
+  color: #ffffff;
+
+}
+
+.site-footer p,
+.site-footer li {
+  color: rgba(255,255,255,0.8);
+}
+
+.site-footer li {
+  margin-bottom: 6px;
+}
+
+

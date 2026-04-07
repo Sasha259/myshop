@@ -1,0 +1,108 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+Каталог товаров
+{% endblock %}
+
+{% block content %}
+
+<section class="product-section">
+
+    <h2 class="section-title">Каталог</h2>
+
+    <!-- ===== СОРТИРОВКА ===== -->
+    <form method="get" class="catalog-controls">
+
+        {% if query %}
+            <input type="hidden" name="q" value="{{ query }}">
+        {% endif %}
+
+        <div class="sort-buttons">
+
+            <input type="radio" id="price_desc" name="sort" value="price_desc"
+                   {% if current_sort == 'price_desc' %}checked{% endif %}
+                   onchange="this.form.submit()">
+            <label for="price_desc">Цена ↓</label>
+
+            <input type="radio" id="price_asc" name="sort" value="price_asc"
+                   {% if current_sort == 'price_asc' %}checked{% endif %}
+                   onchange="this.form.submit()">
+            <label for="price_asc">Цена ↑</label>
+
+            <input type="radio" id="name_asc" name="sort" value="name_asc"
+                   {% if current_sort == 'name_asc' %}checked{% endif %}
+                   onchange="this.form.submit()">
+            <label for="name_asc">A–Я</label>
+
+            <input type="radio" id="name_desc" name="sort" value="name_desc"
+                   {% if current_sort == 'name_desc' %}checked{% endif %}
+                   onchange="this.form.submit()">
+            <label for="name_desc">Я–A</label>
+
+        </div>
+
+    </form>
+
+
+    <!-- ===== ТОВАРЫ ===== -->
+    <div class="product-grid">
+
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+
+                    <a href="{% url 'shop:product_detail' product.id product.slug %}">
+                        <div class="product-image-placeholder">
+                            {{ product.name|truncatechars:20 }}
+                        </div>
+                        <h3>{{ product.name }}</h3>
+                    </a>
+
+                    <div class="product-bottom">
+                        <span class="price">{{ product.price }} ₽</span>
+                        <a href="{% url 'shop:product_detail' product.id product.slug %}" class="buy-btn">
+                            Подробнее
+                        </a>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-products">Товары не найдены.</p>
+        {% endif %}
+
+    </div>
+
+
+    <!-- ===== ПАГИНАЦИЯ ===== -->
+    {% if products.paginator.num_pages > 1 %}
+    <div class="pagination">
+
+        {% if products.has_previous %}
+            <a href="?page={{ products.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}">
+                &lsaquo;
+            </a>
+        {% endif %}
+
+        {% for num in products.paginator.page_range %}
+            {% if products.number == num %}
+                <span class="active">{{ num }}</span>
+            {% elif num >= products.number|add:-2 and num <= products.number|add:2 %}
+                <a href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}">
+                    {{ num }}
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_sort %}&sort={{ current_sort }}{% endif %}">
+                &rsaquo;
+            </a>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

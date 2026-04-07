@@ -1,0 +1,87 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% elif query %}
+        Поиск: {{ query }}
+    {% else %}
+        Магазин техники
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO только на главной -->
+{% if not category and not query %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>Техника для дома, работы и игр</h1>
+        <p>Смартфоны, ноутбуки, компьютеры</p>
+        <a href="{% url 'shop:catalog' %}" class="hero-btn">
+            Перейти в каталог
+        </a>
+    </div>
+</section>
+{% endif %}
+
+<!-- POPULAR CATEGORIES -->
+{% if not category and not query %}
+<section class="category-titles">
+    {% for c in popular_categories %}
+        {% with 'img/categories/'|add:c.slug|add:'.jpg' as bg %}
+            <a href="{{ c.url }}"
+                class="category-title"
+                style="background-image: url('{% static bg %}')">
+                <span>{{ c.name }}</span>
+            </a>
+        {% endwith %}
+    {% endfor %}
+</section>    
+{% endif %}
+
+<!-- ===== ПРОДУКТЫ ===== -->
+<section class="product-section">
+
+    <h2 class="section-title">
+        {% if category %}
+            {{ category.name }}
+        {% elif query %}
+            Результаты поиска
+        {% else %}
+            Популярное
+        {% endif %}
+    </h2>
+
+    <div class="product-grid">
+
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card">
+
+                    <a href="{% url 'shop:product_detail' product.id product.slug %}">
+                        <div class="product-image-placeholder">
+                            {{ product.name|truncatechars:20 }}
+                        </div>
+                        <h3>{{ product.name }}</h3>
+                    </a>
+
+                    <div class="product-bottom">
+                        <span class="price">{{ product.price }} ₽</span>
+                        <a href="{% url 'shop:product_detail' product.id product.slug %}" class="buy-btn">
+                            Подробнее
+                        </a>
+                    </div>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-products">Товары не найдены.</p>
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

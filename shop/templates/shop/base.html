@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Магазин техники{% endblock %}</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidenav.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        {% include 'shop/includes/topbar.html' %}
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <div class="site-layout">
+        <aside class="site-sidenav">
+        </aside>
+
+        <main class="site-content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <h4>О магазине</h4>
+                <p>Магазин техники и электроники</p>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <p>support@shop.ru</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{% static 'js/nav.js' %}"></script>
+    <script src="{% static 'js/ui.js' %}"></script>
+
+</body>
+</html>
