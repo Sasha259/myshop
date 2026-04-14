@@ -1,0 +1,58 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block content %}
+<div class="checkout-page">
+
+  <h1 class="checkout-title">Оформление заказа</h1>
+
+  <div class="checkout-grid">
+
+    <!-- FORM -->
+    <form method="post" class="checkout-form">
+      {% csrf_token %}
+
+      {{ form.as_p }}
+
+      <!-- AGREEMENT -->
+      <div class="checkout-agreement">
+        <label>
+          <input type="checkbox" required>
+          <span>
+            Я согласен на
+            <a href="#" target="_blank">обработку персональных данных</a>
+            и с
+            <a href="#" target="_blank">политикой конфиденциальности</a>
+          </span>
+        </label>
+      </div>
+
+      <button type="submit" class="checkout-btn">
+        Подтвердить заказ
+      </button>
+    </form>
+
+    <!-- SUMMARY -->
+    <div class="checkout-summary">
+      <h3>Ваш заказ</h3>
+      <ul>
+        {% for item in cart %}
+          <li>
+            <span>{{ item.product.name }} × {{ item.quantity }}</span>
+            <strong>{{ item.total_price }} BYN</strong>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <div class="checkout-total">
+        <span>Итого:</span>
+        <strong>{{ cart.get_total_price }} BYN</strong>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

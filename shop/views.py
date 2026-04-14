@@ -54,7 +54,7 @@ def product_detail(request, id, slug):
         if cart_product_form.is_valid():
             cart_product_form.save()
     categories = Category.objects.all()
-    return render(request, 'shop/product/detail.html', {
+    return render(request, 'shop/product/details.html', {
         'product': product,
         'categories': categories,
         'cart_product_form': cart_product_form

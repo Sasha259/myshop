@@ -1,72 +1,73 @@
 {% extends "shop/base.html" %}
+{% load static %}
 
-{% block title %}
-    {% if category %}
-        {{ category.name }}
-    {% elif query %}
-        Поиск: {{ query }}
-    {% else %}
-        Магазин техники
-    {% endif %}
-{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
 
-<!-- HERO только на главной -->
-{% if not category and not query %}
-<section class="hero">
-    <div class="hero-content">
-        <h1>Техника для дома, работы и игр</h1>
-        <p>Смартфоны, ноутбуки, компьютеры</p>
-        <a href="{% url 'shop:catalog' %}" class="hero-btn">
-            Перейти в каталог
-        </a>
-    </div>
-</section>
-{% endif %}
+<div class="product-page">
 
+    <!-- TOP -->
+    <div class="product-top">
 
-<!-- ===== ПРОДУКТЫ ===== -->
-<section class="product-section">
+        <!-- IMAGE PLACEHOLDER -->
+        <div class="product-gallery">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
 
-    <h2 class="section-title">
-        {% if category %}
-            {{ category.name }}
-        {% elif query %}
-            Результаты поиска
-        {% else %}
-            Популярное
-        {% endif %}
-    </h2>
+        <!-- INFO -->
+        <div class="product-info">
+            <h1>{{ product.name }}</h1>
 
-    <div class="product-grid">
+            <div class="product-price">
+                {{ product.price }} BYN
+            </div>
 
-        {% if products %}
-            {% for product in products %}
-                <div class="product-card">
+            <!-- ФОРМА ДОБАВЛЕНИЯ В КОРЗИНУ -->
+            <form action="{% url 'cart:cart_add' product.id %}"
+                  method="post"
+                  class="add-to-cart-form">
 
-                    <a href="{% url 'shop:product_detail' product.id product.slug %}">
-                        <div class="product-image-placeholder">
-                            {{ product.name|truncatechars:20 }}
-                        </div>
-                        <h3>{{ product.name }}</h3>
-                    </a>
+                {% csrf_token %}
 
-                    <div class="product-bottom">
-                        <span class="price">{{ product.price }} ₽</span>
-                        <a href="{% url 'shop:product_detail' product.id product.slug %}" class="buy-btn">
-                            Подробнее
-                        </a>
-                    </div>
-
+                <div class="quantity-field">
+                    {{ cart_product_form.quantity }}
                 </div>
-            {% endfor %}
-        {% else %}
-            <p class="no-products">Товары не найдены.</p>
-        {% endif %}
+
+                {{ cart_product_form.update }}
+
+                <button type="submit" class="btn-buy">
+                    Добавить в корзину
+                </button>
+            </form>
+
+            <div class="product-meta">
+                <span>Категория: {{ product.category.name }}</span>
+
+                <span>
+                    {% if product.available %}
+                        В наличии ({{ product.stock }})
+                    {% else %}
+                        Нет в наличии
+                    {% endif %}
+                </span>
+            </div>
+
+        </div>
 
     </div>
 
-</section>
+    <!-- DESCRIPTION -->
+    <div class="product-description">
+        <h2>Описание</h2>
+
+        {% if product.description %}
+            <p>{{ product.description|linebreaks }}</p>
+        {% else %}
+            <p>Описание временно отсутствует.</p>
+        {% endif %}
+    </div>
+
+</div>
 
 {% endblock %}
