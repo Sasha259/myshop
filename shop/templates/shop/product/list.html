@@ -1,6 +1,7 @@
 {% extends "shop/base.html" %}
 {% load static %}
 
+
 {% block title %}
     {% if category %}
         {{ category.name }}
@@ -28,18 +29,19 @@
 
 <!-- POPULAR CATEGORIES -->
 {% if not category and not query %}
-<section class="category-titles">
+<section class="category-tiles">
     {% for c in popular_categories %}
         {% with 'img/categories/'|add:c.slug|add:'.jpg' as bg %}
             <a href="{{ c.url }}"
-                class="category-title"
-                style="background-image: url('{% static bg %}')">
+               class="category-tile"
+               style="background-image: url('{% static bg %}')">
                 <span>{{ c.name }}</span>
             </a>
         {% endwith %}
     {% endfor %}
-</section>    
+</section>
 {% endif %}
+
 
 <!-- ===== ПРОДУКТЫ ===== -->
 <section class="product-section">
@@ -60,15 +62,13 @@
             {% for product in products %}
                 <div class="product-card">
 
-                    <a href="{% url 'shop:product_detail' product.id product.slug %}">
-                        <div class="product-image-placeholder">
-                            {{ product.name|truncatechars:20 }}
-                        </div>
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
                         <h3>{{ product.name }}</h3>
                     </a>
 
                     <div class="product-bottom">
-                        <span class="price">{{ product.price }} ₽</span>
+                        <span class="price">{{ product.price }} BYN</span>
                         <a href="{% url 'shop:product_detail' product.id product.slug %}" class="buy-btn">
                             Подробнее
                         </a>

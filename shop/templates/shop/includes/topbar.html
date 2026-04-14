@@ -1,40 +1,52 @@
+{% load static %}
+
+<!-- SERVICE BAR -->
 <div class="service-bar">
-    <div class="service-left">
-        <a href="tel:+99999999999">+999 (99) 999-99-99</a>
-        <a href="tel:+99999999998">+999 (99) 999-99-98</a>
-    </div>
+<div class="service-left">
+  <a href="tel:+375291728401">+999 (99) 999-99-99 (A1)</a>
+  <a href="tel:+375298498401">+999 (99) 999-99-99 (МТС)</a>
+</div>
 </div>
 
+<!-- MAIN HEADER -->
 <div class="main-header">
+  <div class="header-left">
+    <a href="{% url 'shop:product_list' %}" class="logo">
+      MyShop
+    </a>
 
-    <!-- LEFT -->
-    <div class="header-left">
-        <a href="{% url 'shop:product_list' %}" class="logo">
-            MyShop
-        </a>
+    <a href="{% url 'shop:catalog' %}" class="catalog-btn">
+      Каталог
+    </a>
+  </div>
 
-        <a href="{% url 'shop:catalog' %}" class="catalog-btn">
-            Каталог
-        </a>
-    </div>
-
-    <!-- SEARCH -->
-    <form class="header-search"
-          method="get"
-          action="{% if category %}
+  <form class="header-search"
+        method="get"
+        action="{% if category %}
                     {% url 'shop:product_list_by_category' category.slug %}
-                  {% else %}
+                {% else %}
                     {% url 'shop:catalog' %}
-                  {% endif %}">
+                {% endif %}">
 
-        <input type="text"
-               name="q"
-               value="{{ request.GET.q }}"
-               placeholder="Поиск товаров...">
+      <input type="text"
+            name="q"
+            value="{{ request.GET.q }}"
+            placeholder="Поиск техники, брендов, моделей…">
 
-        <button type="submit">
-            🔍
-        </button>
-    </form>
+      <button type="submit">
+          <i class="bi bi-search"></i>
+      </button>
+  </form>
 
+  <div class="header-right">
+    <a href="{% url 'cart:cart_detail' %}" class="header-icon">
+      <span class="icon">🛒</span>
+
+      {% if cart %}
+      <span class="cart-count">{{ cart|length }}</span>
+      {% endif %}
+      <span>Заказ</span>
+    </a>
+
+  </div>
 </div>
